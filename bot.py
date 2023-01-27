@@ -7,37 +7,15 @@ import murad
 
 bot = telebot.TeleBot(murad.TOKEN , parse_mode=None)
 
-xxx = (start_message)
+
+@bot.message_handler(commands=['start']) #создаем команду
+def start(message):
+    markup = types.InlineKeyboardMarkup()
+    button1 = types.InlineKeyboardButton("Магазин", url='https://ya.ru')
+    markup.add(button1)
+    bot.send_message(message.chat.id, "Привет, {0.first_name}! Нажми на кнопку и перейди на сайт)".format(message.from_user), reply_markup=markup)
 
 
-@bot.message_handler(commands=['start'])
-def xxx (message):
-    keyboard = telebot.types.ReplyKeyboardMarkup(True)
-    keyboard.row('❤Наш Инстаграм')
-    keyboard.row('Заказать Нож')
-    bot.send_message(message.chat.id, 'Привет Выберите кнопку!', reply_markup=keyboard)
-
-   
     
-    
-@bot.message_handler(commands=['help'])
-def send_help(message):
-	bot.send_message(message.chat.id, "Нужна помощь кликни /start ?")
-
-
-
-
-@bot.message_handler(content_types=['text'])
-def send_text(message):
-    if message.text.lower() == '❤наш инстаграм':
-        bot.send_message(message.chat.id, 'Отправляю сылку на Инстаграм  https://www.instagram.com/kizlyarskie_noji_ot_murada/ ')
-    elif message.text.lower() == 'заказать нож':
-        bot.send_message(message.chat.id, 'ok!')
-
-
-
-
-
-
 
 bot.polling()
